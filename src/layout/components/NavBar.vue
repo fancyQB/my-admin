@@ -1,6 +1,7 @@
 <template>
   <div class="navbar">
     <hamburger class="hamburger-container"></hamburger>
+    <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData"></breadcrumb>
     <div class="right-menu">
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
@@ -20,7 +21,7 @@
             <a target="_blank" href="">
               <el-dropdown-item>课程主页</el-dropdown-item>
             </a>
-            <el-dropdown-item divided @click="logout">
+            <el-dropdown-item divided @click="handleLogout">
               退出登录
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -32,16 +33,38 @@
 
 <script setup>
 import { useStore } from 'vuex'
+import { watch, ref } from 'vue'
+import { useRoute } from 'vue-router'
 
 import hamburger from '@/components/hamburger'
+import breadcrumb from '@/components/breadcrumb'
 
 const store = useStore()
-const logout = () => {
+// 登出
+const handleLogout = () => {
   store.dispatch('user/logout')
 }
+
+// 面包屑导航
+const route = useRoute()
+const breadcrumbRoutesData = ref([])
+const getBreadcrumbRouteData = () => {
+  breadcrumbRoutesData.value = route.matched.filter(
+    item => item.meta.icon && item.meta.title
+  )
+}
+console.log(breadcrumbRoutesData)
+watch(
+  route,
+  () => {
+    getBreadcrumbRouteData()
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/variables.module.scss';
 .navbar {
   height: 50px;
   overflow: hidden;
@@ -49,15 +72,18 @@ const logout = () => {
   background-color: #ffffff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
+.breadcrumb-container {
+  float: left;
+}
 .hamburger-container {
   float: left;
   line-height: 50px;
   height: 100%;
   cursor: pointer;
-  transition: background .5s;
+  transition: background $sideBarDuration;
 
   &:hover {
-    background: rgba(0, 0, 0, .1);
+    background: rgba(0, 0, 0, 0.1);
   }
 }
 .right-menu {

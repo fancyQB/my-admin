@@ -8,7 +8,7 @@ const privateRouter = [
   {
     path: '/user',
     component: layout,
-    redirect: 'user/manage',
+    redirect: '/user/manage',
     meta: {
       title: 'user',
       icon: 'personnel'

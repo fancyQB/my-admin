@@ -10,7 +10,6 @@ import { useStore } from 'vuex'
 
 const store = useStore()
 const toggleClick = () => {
-  console.log(111)
   store.commit('app/togglerSidebarOpened')
 }
 const icon = computed(() => {
