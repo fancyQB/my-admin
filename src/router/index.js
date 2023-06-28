@@ -18,7 +18,7 @@ const privateRouter = [
         path: '/user/manage',
         component: () => import('@/views/user-manage/index'),
         meta: {
-          title: 'personnel-manage',
+          title: 'userManage',
           icon: 'personnel-manage'
         }
       },

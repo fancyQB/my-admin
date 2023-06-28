@@ -1,28 +1,53 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" ref="loginFormRef" :model="loginForm" :rules="loginRules" status-icon >
+    <el-form
+      class="login-form"
+      ref="loginFormRef"
+      :model="loginForm"
+      :rules="loginRules"
+      status-icon
+    >
       <div class="title-container">
-        <h3 class="title">用户登录</h3>
+        <h3 class="title">{{ $t('msg.login.title') }}</h3>
+        <lang-select class="lang-select" effect="light"></lang-select>
       </div>
       <!-- username -->
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon="user" />
         </span>
-        <el-input name="username" placeholder="username" type="text" v-model="loginForm.username"></el-input>
+        <el-input
+          name="username"
+          placeholder="username"
+          type="text"
+          v-model="loginForm.username"
+        ></el-input>
       </el-form-item>
       <!-- password  -->
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon="password"/>
+          <svg-icon icon="password" />
         </span>
-        <el-input name="password" placeholder="password" v-model="loginForm.password" :type="passwordType"></el-input>
+        <el-input
+          name="password"
+          placeholder="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+        ></el-input>
         <span class="show-pwd" @click="onChangePwdType">
-          <svg-icon :icon="passwordType === 'password' ? 'eye': 'eye-open'" />
+          <svg-icon :icon="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
       <!-- 登录按钮 -->
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px" :loading="loading" @click="handleLogin">登录</el-button>
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="handleLogin"
+        >{{ $t('msg.login.loginBtn') }}</el-button
+      >
+      <!-- 用户信息描述 -->
+      <div class="tips" v-html="$t('msg.login.desc')"></div>
     </el-form>
   </div>
 </template>
@@ -34,21 +59,24 @@ import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 
 import SvgIcon from '@/components/SvgIcon/index.vue'
+import LangSelect from '@/components/LangSelect/index.vue'
 
-import { validatePassword } from './rules'
+import { validatePassword, validateUsername } from './rules'
+import { watchSwitchLang } from '@/utils/i18n'
 
 // 绑定数据源
 const loginForm = ref({
   username: 'super-admin',
   password: '123456'
 })
+// const i18n = useI18n()
 // 验证规则
 const loginRules = ref({
   username: [
     {
       required: true,
       trigger: 'blur',
-      message: '用户名为必填项'
+      validator: validateUsername()
     }
   ],
   password: [
@@ -89,6 +117,10 @@ const handleLogin = () => {
     })
   })
 }
+// 监听语言的变化
+watchSwitchLang(() => {
+  loginFormRef.value.validate()
+})
 </script>
 
 <style lang="scss" scoped>
@@ -111,8 +143,8 @@ $cursor: #fff;
     overflow: hidden;
 
     ::v-deep .el-form-item {
-      border: 1px solid rgba(255, 255, 255, .1);
-      background-color: rgba(0, 0, 0, .1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.1);
       border-radius: 5px;
       color: #454545;
     }
@@ -139,15 +171,15 @@ $cursor: #fff;
     display: inline-block;
   }
   .title-container {
-      position: relative;
+    position: relative;
 
-      .title {
-        font-size: 26px;
-        color: $light_gray;
-        margin: 0px auto 40px auto;
-        text-align: center;
-        font-weight: bold;
-      }
+    .title {
+      font-size: 26px;
+      color: $light_gray;
+      margin: 0px auto 40px auto;
+      text-align: center;
+      font-weight: bold;
+    }
   }
   .show-pwd {
     position: absolute;
@@ -157,6 +189,21 @@ $cursor: #fff;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+  ::v-deep .lang-select {
+    position: absolute;
+    top: 4px;
+    right: 0;
+    background-color: #fff;
+    font-size: 22px;
+    padding: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .tips {
+    font-size: 16px;
+    line-height: 24px;
+    color: #fff;
   }
 }
 </style>

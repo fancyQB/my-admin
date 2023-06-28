@@ -11,4 +11,7 @@
 
 .breadcrumb-leave-active {
   position: absolute;
+  .el-breadcrumb__separator {
+    display: none;
+  }
 }

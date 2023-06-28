@@ -6,9 +6,9 @@
           class="redirect"
           v-if="routes.length - 1 !== index"
           @click="handleLink(item)"
-          >{{ item.meta.title }}</span
+          >{{ generateTitle(item.meta.title) }}</span
         >
-        <span class="no-redirect" v-else>{{ item.meta.title }}</span>
+        <span class="no-redirect" v-else>{{ generateTitle(item.meta.title) }}</span>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -18,6 +18,7 @@
 import { defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex'
+import { generateTitle } from '@/utils/i18n'
 
 defineProps({
   routes: {

@@ -3,3 +3,6 @@ export const TOKEN = 'token'
 export const TIME_STAMP = 'time_stamp'
 // TOKEN 缓存时间戳
 export const TOKEN_TIMEOUT_VALUE = 2 * 60 * 60 * 1000
+
+// 国际化
+export const LANG = 'language'
