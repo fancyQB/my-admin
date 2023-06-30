@@ -4,6 +4,7 @@ export default {
     loginBtn: 'Login',
     usernameRule: 'Username is required',
     passwordRule: 'Password cannot be less than 6 digits',
+    successTips: 'login successful',
     desc: `
     Test authority account:<br />
      Provide three kinds of authority accounts:<br />
@@ -46,6 +47,7 @@ export default {
     themeChange: 'Theme Change'
   },
   universal: {
+    tips: 'Tips',
     confirm: 'confirm',
     cancel: 'cancel'
   },

@@ -57,19 +57,21 @@
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 import SvgIcon from '@/components/SvgIcon/index.vue'
 import LangSelect from '@/components/LangSelect/index.vue'
 
 import { validatePassword, validateUsername } from './rules'
 import { watchSwitchLang } from '@/utils/i18n'
+import { ElMessage } from 'element-plus'
 
 // 绑定数据源
 const loginForm = ref({
   username: 'super-admin',
   password: '123456'
 })
-// const i18n = useI18n()
+const i18n = useI18n()
 // 验证规则
 const loginRules = ref({
   username: [
@@ -104,17 +106,21 @@ const loading = ref(false)
 const loginFormRef = ref(null)
 const store = useStore()
 const handleLogin = () => {
-  loginFormRef.value.validate(valid => {
+  loginFormRef.value.validate((valid) => {
     if (!valid) return
     loading.value = true
-    store.dispatch('user/login', loginForm.value).then(() => {
-      loading.value = false
-      // 跳转
-      router.push('/')
-    }).catch(err => {
-      console.log(err)
-      loading.value = false
-    })
+    store
+      .dispatch('user/login', loginForm.value)
+      .then(() => {
+        loading.value = false
+        // 跳转
+        ElMessage.success(i18n.t('msg.login.successTips'))
+        router.push('/')
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
   })
 }
 // 监听语言的变化

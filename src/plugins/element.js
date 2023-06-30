@@ -6,7 +6,7 @@ import en from 'element-plus/lib/locale/lang/en'
 
 import store from '@/store'
 
-export default (app) => {
+export default app => {
   app.use(ElementPlus, {
     locale: store.getters.language === 'zh' ? zhCn : en
   })

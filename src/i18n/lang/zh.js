@@ -4,6 +4,7 @@ export default {
     loginBtn: '登录',
     usernameRule: '用户名为必填项',
     passwordRule: '密码不能少于6位',
+    successTips: '登录成功',
     desc: `
     测试权限账号：<br />
     提供三种权限账号：<br />
@@ -46,6 +47,7 @@ export default {
     themeChange: '主题更换'
   },
   universal: {
+    tips: '提示',
     confirm: '确定',
     cancel: '取消'
   },

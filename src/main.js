@@ -13,6 +13,7 @@ import installIcons from '@/icons'
 import '@/permission'
 
 const app = createApp(App)
+
 installElementPlus(app)
 installIcons(app)
 app

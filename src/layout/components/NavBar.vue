@@ -3,6 +3,8 @@
     <hamburger class="hamburger-container"></hamburger>
     <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData"></breadcrumb>
     <div class="right-menu">
+      <!-- 换肤 -->
+      <theme-select class="right-menu-item hover-effect"></theme-select>
       <!-- 国际化 -->
       <lang-select class="right-menu-item hover-effect"></lang-select>
       <!-- 头像 -->
@@ -41,6 +43,7 @@ import { useRoute } from 'vue-router'
 import hamburger from '@/components/hamburger'
 import breadcrumb from '@/components/breadcrumb'
 import LangSelect from '@/components/LangSelect'
+import ThemeSelect from '@/components/ThemeSelect'
 
 const store = useStore()
 // 登出

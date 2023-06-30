@@ -1,5 +1,5 @@
 <template>
-  <span>
+  <i>
     <!-- 展示外部图标 -->
     <div
       v-if="isExternal"
@@ -11,7 +11,7 @@
     <svg v-else class="svg-icon" :class="className" aria-hidden="true">
       <use :xlink:href="iconName" />
     </svg>
-  </span>
+  </i>
 </template>
 
 <script setup>
