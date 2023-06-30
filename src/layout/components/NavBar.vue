@@ -3,6 +3,8 @@
     <hamburger class="hamburger-container"></hamburger>
     <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData"></breadcrumb>
     <div class="right-menu">
+      <!-- 全屏 -->
+      <screenfull class="right-menu-item hover-effect"></screenfull>
       <!-- 换肤 -->
       <theme-select class="right-menu-item hover-effect"></theme-select>
       <!-- 国际化 -->
@@ -44,6 +46,7 @@ import hamburger from '@/components/hamburger'
 import breadcrumb from '@/components/breadcrumb'
 import LangSelect from '@/components/LangSelect'
 import ThemeSelect from '@/components/ThemeSelect'
+import screenfull from '@/components/screenfull'
 
 const store = useStore()
 // 登出
