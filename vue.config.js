@@ -4,6 +4,10 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const cliDefaultConfig = defineConfig({
   transpileDependencies: true,
   configureWebpack: {
+    module: {
+      // 忽略 Critical dependency: require function is used in a way in which dependencies cannot be statically extracted 警告
+      unknownContextCritical: false
+    },
     plugins: [new NodePolyfillPlugin()]
   }
 })
@@ -25,6 +29,17 @@ module.exports = {
         // 要代理的服务器地址  这里不用写 api
         target: 'https://api.imooc-admin.lgdsunday.club/',
         changeOrigin: true // 是否跨域
+      }
+    },
+    // 忽略全屏覆盖 ResizeObserver loop limit exceeded 警告
+    client: {
+      overlay: {
+        runtimeErrors: (error) => {
+          // 忽略 点击headerSearch图标后 报错
+          if (error.message.includes('ResizeObserver loop limit exceeded')) {
+            return false
+          }
+        }
       }
     }
   },
