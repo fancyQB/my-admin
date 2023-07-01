@@ -3,6 +3,8 @@
     <hamburger class="hamburger-container"></hamburger>
     <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData"></breadcrumb>
     <div class="right-menu">
+      <!-- 头部搜索框 -->
+      <header-search class="right-menu-item hover-effect"></header-search>
       <!-- 全屏 -->
       <screenfull class="right-menu-item hover-effect"></screenfull>
       <!-- 换肤 -->
@@ -47,6 +49,7 @@ import breadcrumb from '@/components/breadcrumb'
 import LangSelect from '@/components/LangSelect'
 import ThemeSelect from '@/components/ThemeSelect'
 import screenfull from '@/components/screenfull'
+import HeaderSearch from '@/components/HeaderSearch'
 
 const store = useStore()
 // 登出
