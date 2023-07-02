@@ -89,7 +89,6 @@ const onSelectChange = (val) => {
 const router = useRouter()
 let searchPool = computed(() => {
   const filterRoutesData = filterRoutes(router.getRoutes())
-  console.log(generateSerachData(filterRoutesData))
   return generateSerachData(filterRoutesData)
 })
 

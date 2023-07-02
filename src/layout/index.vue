@@ -5,6 +5,8 @@
     <div class="main-container">
       <div class="fixed-header">
         <nav-bar />
+        <!-- tags -->
+        <tags-view></tags-view>
       </div>
         <app-main />
     </div>
@@ -15,6 +17,7 @@
 import NavBar from './components/NavBar'
 import SideBar from './components/Sidebar'
 import AppMain from './components/AppMain'
+import TagsView from '@/components/tagsview'
 
 // import variables from '@/styles/variables.module.scss'
 
