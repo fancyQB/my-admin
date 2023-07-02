@@ -52,6 +52,9 @@ const iconName = computed(() => `#icon-${props.icon}`)
 // .svgIcon-container {
 //   display: inline-block;
 // }
+i {
+  -webkit-user-select: none;
+}
 .svg-icon {
   width: 1em;
   height: 1em;
