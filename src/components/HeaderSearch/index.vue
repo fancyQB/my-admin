@@ -1,7 +1,8 @@
 <template>
-  <div :class="{ show: isShow }" class="header-search">
+  <div :class="{ show: isShow }" class="header-search" >
     <svg-icon
       class-name="search-icon"
+      id-name="guide-search"
       icon="search"
       @click.stop="onShowClick"
     />
@@ -131,11 +132,11 @@ watchSwitchLang(() => {
   font-size: 0 !important;
   ::v-deep .search-icon {
     cursor: pointer;
-    font-size: 18px;
+    font-size: 24px;
     vertical-align: middle;
   }
   .header-search-select {
-    font-size: 18px;
+    font-size: 24px;
     transition: width 0.2s;
     width: 0;
     overflow: hidden;

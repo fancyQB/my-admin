@@ -8,7 +8,7 @@
       :class="className"
     ></div>
     <!-- 展示内部图标 -->
-    <svg v-else class="svg-icon" :class="className" aria-hidden="true">
+    <svg v-else class="svg-icon" :class="className" :id="idName" aria-hidden="true">
       <use :xlink:href="iconName" />
     </svg>
   </i>
@@ -25,6 +25,11 @@ const props = defineProps({
   },
   // 图标类名
   className: {
+    type: String,
+    default: ''
+  },
+  // 图标id
+  idName: {
     type: String,
     default: ''
   }

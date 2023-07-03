@@ -1,8 +1,10 @@
 <template>
   <div class="navbar">
     <hamburger class="hamburger-container"></hamburger>
-    <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData"></breadcrumb>
+    <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData" id="guide-breadcrumb"></breadcrumb>
     <div class="right-menu">
+      <!-- 引导 -->
+      <guide class="right-menu-item hover-effect"></guide>
       <!-- 头部搜索框 -->
       <header-search class="right-menu-item hover-effect"></header-search>
       <!-- 全屏 -->
@@ -50,6 +52,7 @@ import LangSelect from '@/components/LangSelect'
 import ThemeSelect from '@/components/ThemeSelect'
 import screenfull from '@/components/screenfull'
 import HeaderSearch from '@/components/HeaderSearch'
+import Guide from '@/components/Guide'
 
 const store = useStore()
 // 登出
