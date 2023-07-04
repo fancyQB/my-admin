@@ -1,7 +1,11 @@
 <template>
   <div class="navbar">
     <hamburger class="hamburger-container"></hamburger>
-    <breadcrumb class="breadcrumb-container" :routes="breadcrumbRoutesData" id="guide-breadcrumb"></breadcrumb>
+    <breadcrumb
+      class="breadcrumb-container"
+      :routes="breadcrumbRoutesData"
+      id="guide-breadcrumb"
+    ></breadcrumb>
     <div class="right-menu">
       <!-- 引导 -->
       <guide class="right-menu-item hover-effect"></guide>
@@ -16,11 +20,7 @@
       <!-- 头像 -->
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <el-avatar
-            shape="square"
-            :size="40"
-            :src="$store.getters.userInfo.avatar"
-          ></el-avatar>
+          <el-avatar :size="40" shape="circle" :src="githubImage"></el-avatar>
           <!-- <i class="el-icon-s-tools"></i> -->
         </div>
         <template #dropdown>
@@ -54,6 +54,8 @@ import screenfull from '@/components/screenfull'
 import HeaderSearch from '@/components/HeaderSearch'
 import Guide from '@/components/Guide'
 
+import githubImage from '@/assets/image/github-mark.png'
+
 const store = useStore()
 // 登出
 const handleLogout = () => {
@@ -65,7 +67,7 @@ const route = useRoute()
 const breadcrumbRoutesData = ref([])
 const getBreadcrumbRouteData = () => {
   breadcrumbRoutesData.value = route.matched.filter(
-    item => item.meta.icon && item.meta.title
+    (item) => item.meta.icon && item.meta.title
   )
 }
 watch(
@@ -106,7 +108,7 @@ watch(
   float: right;
   padding-right: 16px;
 
-  ::v-deep .right-menu-item {
+  :deep(.right-menu-item) {
     display: inline-block;
     padding: 0 18px 0 0;
     font-size: 24px;
@@ -116,7 +118,7 @@ watch(
       cursor: pointer;
     }
   }
-  ::v-deep .avatar-container {
+  :deep(.avatar-container) {
     cursor: pointer;
     .avatar-wrapper {
       margin-top: 5px;

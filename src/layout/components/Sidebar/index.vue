@@ -3,8 +3,8 @@
     <div class="logo-container">
       <el-avatar
         :size="logoHeight"
-        shape="square"
-        src="https://m.imooc.com/static/wap/static/common/img/logo-small@2x.png"
+        shape="circle"
+        :src="githubImage"
       ></el-avatar>
       <h1 class="logo-title" v-if="$store.getters.sidebarOpen">fancyqb</h1>
     </div>
@@ -17,6 +17,7 @@
 <script setup>
 import {} from 'vue'
 import SidebarMenu from './SidebarMenu.vue'
+import githubImage from '@/assets/image/github-mark-white.png'
 
 const logoHeight = 44
 </script>
@@ -28,6 +29,13 @@ const logoHeight = 44
   display: flex;
   justify-content: center;
   align-items: center;
+  :deep(.avatar) {
+    font-size: 24px;
+    color: pink;
+  }
+  :deep(.el-avatar) {
+    --el-avatar-background-color: black;
+  }
   .logo-title {
     margin-left: 10px;
     color: #fff;
