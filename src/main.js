@@ -9,6 +9,8 @@ import installElementPlus from './plugins/element'
 import '@/styles/index.scss'
 // 导入 svgIcon
 import installIcons from '@/icons'
+// 导入全局属性
+import installFilters from '@/filters'
 // 路由鉴权
 import '@/permission'
 
@@ -16,6 +18,7 @@ const app = createApp(App)
 
 installElementPlus(app)
 installIcons(app)
+installFilters(app)
 app
   .use(store)
   .use(router)
