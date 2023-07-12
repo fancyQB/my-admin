@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 
-const dateFormt = (val, format = 'YYYY-MM-DD') => {
+export const dateFormt = (val, format = 'YYYY-MM-DD') => {
+  // excel导入时 numb 有可能就是正确的时间
+  if (val.includes('-')) return val
   if (!isNaN(val)) {
     val = parseInt(val)
   }

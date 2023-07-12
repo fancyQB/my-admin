@@ -41,7 +41,7 @@ service.interceptors.response.use(
       return data
     } else {
       // 业务失败
-      ElMessage.error(message) // 错误消息提示
+      // ElMessage.error(message) // 错误消息提示
       return Promise.reject(new Error(message))
     }
   },

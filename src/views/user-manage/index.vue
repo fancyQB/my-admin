@@ -3,22 +3,27 @@
     <!-- 头部 导入导出 execel -->
     <div class="header">
       <el-card>
-        <div class="button-container">
+        <div class="del-container">
+          <el-button type="danger" @click="removeChooseRow">删除选择</el-button>
+        </div>
+        <div class="excel-container">
           <el-button
             type="primary"
             class="export-button"
             @click="handleExcelImport"
             >{{ $t('msg.excel.importExcel') }}</el-button
           >
-          <el-button type="success">{{
+          <el-button type="success" @click="onToExcelClick">{{
             $t('msg.excel.exportExcel')
           }}</el-button>
         </div>
       </el-card>
     </div>
+    <export-to-excel v-model="exportToExcelVisible"></export-to-excel>
     <!-- 员工管理信息表 -->
     <el-card>
-      <el-table :data="totalData" border style="width: 100%">
+      <el-table :data="totalData" border style="width: 100%" @select="onSelect">
+        <el-table-column type="selection" align="center"></el-table-column>
         <el-table-column label="#" type="index"></el-table-column>
         <el-table-column
           sortable
@@ -92,10 +97,12 @@
 <script setup>
 import { ref, onActivated } from 'vue'
 import { useRouter } from 'vue-router'
-import { getUserManageList, deleteUser } from '@/api/user-manage'
-import { watchSwitchLang } from '@/utils/i18n'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
+
+import { watchSwitchLang } from '@/utils/i18n'
+import { getUserManageList, deleteUser } from '@/api/user-manage'
+import ExportToExcel from './components/Export2Excel.vue'
 
 const i18n = useI18n()
 
@@ -113,7 +120,6 @@ const getListData = async () => {
   })
   totalData.value = result.list
   total.value = result.total
-  console.log(result)
 }
 getListData()
 
@@ -126,6 +132,55 @@ const handleSizeChange = (currentSize) => {
 const handleCurrentChange = (currentPage) => {
   page.value = currentPage
   getListData()
+}
+
+const chooseRow = ref([])
+// 删除 选中btn
+const removeChooseRow = () => {
+  if (!chooseRow.value.length) {
+    ElMessage.warning('请先选中数据')
+    return
+  }
+  const check = chooseRow.value.map((item) => {
+    return item._id === '64adb4c0d9f5193842d64d94' ||
+      item._id === '64adb4c0d9f5193842d64d93' ||
+      item._id === '64adb4c0d9f5193842d64d95'
+      ? 0
+      : item
+  })
+  if (check.indexOf(0) > -1) {
+    ElMessage.warning('选中非法的数据')
+    return
+  }
+  ElMessageBox.confirm(
+    i18n.t('msg.excel.dialogTitle1') +
+      chooseRow.value.length +
+      i18n.t('msg.excel.dialogTitle2'),
+    { type: 'warning' }
+  ).then(async () => {
+    console.log(chooseRow.value)
+    const deletePromises = chooseRow.value.map(async (item) => {
+      await deleteUser(item._id)
+    })
+    Promise.all(deletePromises)
+      .then(() => {
+        ElMessage.success(i18n.t('msg.excel.removeSuccess'))
+        // 所有删除操作完成后重新渲染
+        getListData()
+        chooseRow.value = ref([])
+      })
+      .catch((error) => {
+        console.log(error)
+        ElMessage.error('' + error)
+        chooseRow.value = ref([])
+      })
+  })
+}
+
+// excle btn 导出
+const exportToExcelVisible = ref(false)
+const onToExcelClick = () => {
+  exportToExcelVisible.value = true
 }
 
 // excel btn 导入
@@ -142,11 +197,20 @@ const onRemoveClick = (row) => {
       i18n.t('msg.excel.dialogTitle2'),
     { type: 'warning' }
   ).then(async () => {
-    await deleteUser(row._id)
-    ElMessage.success(i18n.t('msg.excel.removeSuccess'))
-    // 重新渲染
-    getListData()
+    try {
+      await deleteUser(row._id)
+      ElMessage.success(i18n.t('msg.excel.removeSuccess'))
+      // 重新渲染
+      getListData()
+    } catch (error) {
+      ElMessage.error(error.message)
+    }
   })
+}
+
+const onSelect = (selection) => {
+  chooseRow.value = selection
+  console.log(chooseRow.value)
 }
 
 // 添加语言监听
@@ -157,7 +221,13 @@ onActivated(getListData)
 
 <style lang="scss" scoped>
 .user-manage-container {
-  .button-container {
+  .header {
+    margin-bottom: 20px;
+  }
+  .del-container {
+    position: absolute;
+  }
+  .excel-container {
     text-align: right;
   }
   ::v-deep .avatar {
