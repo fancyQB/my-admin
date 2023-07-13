@@ -1,8 +1,11 @@
 import dayjs from 'dayjs'
 
 export const dateFormt = (val, format = 'YYYY-MM-DD') => {
-  // excel导入时 numb 有可能就是正确的时间
-  if (val.includes('-')) return val
+  try {
+    if (val.includes('-')) return val
+  } catch (error) {
+    console.log('global filters:' + error)
+  }
   if (!isNaN(val)) {
     val = parseInt(val)
   }

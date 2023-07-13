@@ -66,9 +66,12 @@
           width="260"
         >
           <template #default="{ row }">
-            <el-button type="primary" size="mini">{{
-              $t('msg.excel.show')
-            }}</el-button>
+            <el-button
+              type="primary"
+              size="mini"
+              @click="onShowClick(row._id)"
+              >{{ $t('msg.excel.show') }}</el-button
+            >
             <el-button type="info" size="mini">{{
               $t('msg.excel.showRole')
             }}</el-button>
@@ -103,6 +106,7 @@ import { useI18n } from 'vue-i18n'
 import { watchSwitchLang } from '@/utils/i18n'
 import { getUserManageList, deleteUser } from '@/api/user-manage'
 import ExportToExcel from './components/Export2Excel.vue'
+import router from '@/router'
 
 const i18n = useI18n()
 
@@ -142,9 +146,9 @@ const removeChooseRow = () => {
     return
   }
   const check = chooseRow.value.map((item) => {
-    return item._id === '64adb4c0d9f5193842d64d94' ||
-      item._id === '64adb4c0d9f5193842d64d93' ||
-      item._id === '64adb4c0d9f5193842d64d95'
+    return item.username === 'admin' ||
+      item.username === 'super-admin' ||
+      item.username === 'test'
       ? 0
       : item
   })
@@ -211,6 +215,15 @@ const onRemoveClick = (row) => {
 const onSelect = (selection) => {
   chooseRow.value = selection
   console.log(chooseRow.value)
+}
+
+// 用户操作
+
+/**
+ * 查看详情
+ */
+const onShowClick = (id) => {
+  router.push(`/user/info/${id}`)
 }
 
 // 添加语言监听
