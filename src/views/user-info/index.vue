@@ -1,13 +1,17 @@
 <template>
   <div class="user-info-container">
     <el-card class="print-box">
-      <el-button type="primary" size="small">{{
-        $t('msg.userInfo.print')
-      }}</el-button>
+      <el-button
+        type="primary"
+        size="small"
+        :loading="printLoading"
+        v-print="printObj"
+        >{{ $t('msg.userInfo.print') }}</el-button
+      >
     </el-card>
 
     <el-card>
-      <div class="user-info-box">
+      <div class="user-info-box" id="userInfoBox">
         <h2 class="title">{{ $t('msg.userInfo.title') }}</h2>
         <div class="user-info-header">
           <!-- 头部渲染表格 -->
@@ -92,6 +96,24 @@ const props = defineProps({
   }
 })
 
+// 打印相关
+const printLoading = ref(false)
+
+const printObj = {
+  // 打印区域
+  id: 'userInfoBox',
+  // 打印标题
+  popTitle: '',
+  // 打印前
+  beforOpenCallback(vue) {
+    printLoading.value = true
+  },
+  // 执行打印
+  openCallback(vue) {
+    printLoading.value = false
+  }
+}
+
 // 数据相关
 const detailData = ref({})
 const getUserDetail = async () => {
@@ -109,43 +131,43 @@ watchSwitchLang(getUserDetail)
     margin-bottom: 20px;
     text-align: right;
   }
-  .user-info-box {
-    width: 1024px;
-    margin: 0 auto;
-    .title {
-      margin-bottom: 16px;
-      text-align: center;
+}
+.user-info-box {
+  width: 1024px;
+  margin: 0 auto;
+  .title {
+    margin-bottom: 16px;
+    text-align: center;
+  }
+  .user-info-header {
+    display: flex;
+    :deep(.el-descriptions) {
+      flex-grow: 1;
     }
-    .user-info-header {
-      display: flex;
-      :deep(.el-descriptions) {
-        flex-grow: 1;
-      }
-      .avatar {
-        width: 187px;
-        box-sizing: border-box;
-        padding: 30px 20px;
-        border: 1px solid #ebeef5;
-        border-left: none;
-      }
-      .remark {
-        margin-right: 12px;
-      }
+    .avatar {
+      width: 187px;
+      box-sizing: border-box;
+      padding: 30px 20px;
+      border: 1px solid #ebeef5;
+      border-left: none;
     }
-    .user-info-body {
-      ul {
-        list-style: none;
-        li {
-          span {
-            margin-right: 62px;
-          }
+    .remark {
+      margin-right: 12px;
+    }
+  }
+  .user-info-body {
+    ul {
+      list-style: none;
+      li {
+        span {
+          margin-right: 62px;
         }
       }
     }
-    .foot {
-      margin-top: 42px;
-      text-align: right;
-    }
+  }
+  .foot {
+    margin-top: 42px;
+    text-align: right;
   }
 }
 </style>

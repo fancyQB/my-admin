@@ -11,11 +11,14 @@ import '@/styles/index.scss'
 import installIcons from '@/icons'
 // 导入全局属性
 import installFilters from '@/filters'
+// 导入 vue3-print-nb
+import installDirective from '@/directives'
 // 路由鉴权
 import '@/permission'
 
 const app = createApp(App)
 
+installDirective(app)
 installElementPlus(app)
 installIcons(app)
 installFilters(app)
