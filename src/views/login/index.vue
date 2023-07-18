@@ -117,8 +117,7 @@ const handleLogin = () => {
         ElMessage.success(i18n.t('msg.login.successTips'))
         router.push('/')
       })
-      .catch((err) => {
-        console.log(err)
+      .catch(() => {
         loading.value = false
       })
   })

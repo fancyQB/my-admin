@@ -18,7 +18,6 @@ const i18n = useI18n()
  * 数据解析成功之后的回调
  */
 const onSuccess = async ({ results }) => {
-  console.log(results)
   const updateData = generateData(results)
   await userBatchImport(updateData)
   ElMessage.success({

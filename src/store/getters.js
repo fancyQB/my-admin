@@ -18,8 +18,10 @@ const getters = {
   sidebarOpen: state => state.app.sidebarOpen,
   language: state => state.app.language,
   mainColor: state => state.theme.mainColor,
-  tagsViewList: state => state.app.tagsViewList
+  tagsViewList: state => state.app.tagsViewList,
 
+  // 全局队列
+  queues: state => state.queue.queues
 }
 
 export default getters

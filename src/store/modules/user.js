@@ -1,6 +1,6 @@
 import md5 from 'md5'
-import router from '@/router'
 
+import router, { resetRouter } from '@/router'
 import { login, getUserInfo as getInfo } from '../../api/sys'
 import { getItem, setItem, removeAllItem } from '../../utils/storage'
 import { TOKEN } from '@/constant'
@@ -43,7 +43,7 @@ export default {
       return new Promise((resolve, reject) => {
         getInfo().then(data => {
           this.commit('user/setUserInfo', data)
-          resolve()
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -51,7 +51,9 @@ export default {
     },
     // 登出
     logout() {
+      resetRouter()
       this.commit('user/setToken', '')
+      this.commit('user/setUserInfo', {})
       removeAllItem()
       // TODO 删除权限
       router.push('/login')

@@ -30,6 +30,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
+
 import Fuse from 'fuse.js'
 
 import { filterRoutes } from '@/utils/route'

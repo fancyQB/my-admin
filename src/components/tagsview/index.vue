@@ -49,7 +49,6 @@ const menuStyle = reactive({
  * 展示menu
  */
 const openMenu = (e, index) => {
-  console.log(e)
   const { x, y } = e
   menuStyle.left = x + 'px'
   menuStyle.top = y + 'px'

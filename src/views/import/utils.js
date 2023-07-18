@@ -13,7 +13,6 @@ export const USER_RELATIONS = {
  */
 export const formatDate = (numb) => {
   // excel导入时 numb 有可能就是正确的时间
-  console.log(typeof numb)
   if (typeof numb === 'string') return numb
   const time = new Date((numb - 1) * 24 * 3600000 + 1)
   time.setYear(time.getFullYear() - 70)

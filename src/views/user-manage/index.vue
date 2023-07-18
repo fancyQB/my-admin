@@ -11,6 +11,7 @@
             type="primary"
             class="export-button"
             @click="handleExcelImport"
+            v-permission="['importUser']"
             >{{ $t('msg.excel.importExcel') }}</el-button
           >
           <el-button type="success" @click="onToExcelClick">{{
@@ -72,10 +73,10 @@
               @click="onShowClick(row._id)"
               >{{ $t('msg.excel.show') }}</el-button
             >
-            <el-button type="info" size="mini">{{
+            <el-button type="info" size="mini" @click="showRoleBtn(row._id)" v-permission="['distributeRole']">{{
               $t('msg.excel.showRole')
             }}</el-button>
-            <el-button type="danger" size="mini" @click="onRemoveClick(row)">{{
+            <el-button type="danger" size="mini" @click="onRemoveClick(row)" v-permission="['removeUser']">{{
               $t('msg.excel.remove')
             }}</el-button>
           </template>
@@ -94,11 +95,12 @@
       :total="total"
     >
     </el-pagination>
+    <roles v-model="dialogVisibility" :userId="selectUserId"></roles>
   </div>
 </template>
 
 <script setup>
-import { ref, onActivated } from 'vue'
+import { ref, onActivated, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessageBox, ElMessage } from 'element-plus'
 import { useI18n } from 'vue-i18n'
@@ -106,9 +108,27 @@ import { useI18n } from 'vue-i18n'
 import { watchSwitchLang } from '@/utils/i18n'
 import { getUserManageList, deleteUser } from '@/api/user-manage'
 import ExportToExcel from './components/Export2Excel.vue'
+import Roles from './components/roles.vue'
 import router from '@/router'
 
 const i18n = useI18n()
+
+const selectUserId = ref('')
+
+// 角色页面渲染开关
+const dialogVisibility = ref(false)
+// 角色 btn
+const showRoleBtn = (id) => {
+  dialogVisibility.value = true
+  selectUserId.value = id
+}
+// 监听 dialogVisibility
+watch(dialogVisibility, (val) => {
+  if (!val) {
+    selectUserId.value = ''
+    getListData()
+  }
+})
 
 // 数据相关
 const totalData = ref([])
@@ -162,7 +182,6 @@ const removeChooseRow = () => {
       i18n.t('msg.excel.dialogTitle2'),
     { type: 'warning' }
   ).then(async () => {
-    console.log(chooseRow.value)
     const deletePromises = chooseRow.value.map(async (item) => {
       await deleteUser(item._id)
     })
@@ -174,8 +193,7 @@ const removeChooseRow = () => {
         chooseRow.value = ref([])
       })
       .catch((error) => {
-        console.log(error)
-        ElMessage.error('' + error)
+        ElMessage.error(error.message)
         chooseRow.value = ref([])
       })
   })
@@ -214,7 +232,6 @@ const onRemoveClick = (row) => {
 
 const onSelect = (selection) => {
   chooseRow.value = selection
-  console.log(chooseRow.value)
 }
 
 // 用户操作

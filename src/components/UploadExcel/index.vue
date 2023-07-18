@@ -120,7 +120,6 @@ const handleDrop = (e) => {
   }
   const rawFile = files[0]
   if (!isExcel(rawFile)) {
-    console.log(rawFile)
     ElMessage.error('文件必须是 .xlsx, .xls, .csv 格式')
   }
   // 触发上传事件

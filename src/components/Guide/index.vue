@@ -28,7 +28,6 @@ onMounted(() => {
   })
 })
 const onClick = () => {
-  console.log(driver)
   driver.defineSteps(steps(i18n))
   driver.start()
 }

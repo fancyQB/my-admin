@@ -13,13 +13,12 @@
 
 <script setup>
 import { defineProps } from 'vue'
-const props = defineProps({
+defineProps({
   chapters: {
     type: Object,
     required: true
   }
 })
-console.log(props.chapters)
 </script>
 
 <style lang="scss" scoped></style>

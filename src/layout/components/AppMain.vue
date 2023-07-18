@@ -21,7 +21,6 @@ import { generateTitle } from '@/utils/i18n'
 const getTitle = (route) => {
   let title = ''
   if (!route?.meta?.title) {
-    console.log(route)
     const pathArr = route.fullPath.split('/')
     title = pathArr[pathArr.length - 1]
   } else {
