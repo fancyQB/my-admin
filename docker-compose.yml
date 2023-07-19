@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  vue-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: vue-admin:1.0.2
+    container_name: admin
+    ports:
+      - "8999:80"
