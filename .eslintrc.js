@@ -10,6 +10,10 @@ module.exports = {
   parserOptions: {
     parser: '@babel/eslint-parser'
   },
+  globals: {
+    // vue3.2 可以不用导入 defineProps  直接使用
+    defineProps: 'writable'
+  },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
